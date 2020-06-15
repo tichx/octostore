@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/daaronch/.local/share/virtualenvs/octostore-h50EMA6d/bin/python"
+    "python.pythonPath": "/home/daaronch/.local/share/virtualenvs/octostore-h50EMA6d/bin/python",
+    "restructuredtext.confPath": "${workspaceFolder}/docs"
 }
