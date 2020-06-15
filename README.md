@@ -73,3 +73,5 @@ octostore.diff(old_workflow_run, this_run)  # Outputs a clean lists of diffs
 # All results in the last two weeks
 octostore.get_all_runs(date_one=datetime.datetime.now(), date_two=(datetime.datetime.now().timedelta(days = 14)))
 ```
+
+This project is about building an API to enable the above scenarios.
