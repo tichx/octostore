@@ -17,7 +17,7 @@ In order to do so, today, a developer would need to have:
 Our goal is to enable the job to be done in the simplest possible way so that developers can read/write to the store and make better decisions about what to focus on to make their customers happier. 
 
 A sample code blurb for how this might work follows:
-```
+```python
 imort github.octostore
 
 # Create workflow
