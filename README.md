@@ -17,7 +17,7 @@ In order to do so, today, a developer would need to have:
 Our goal is to enable the job to be done in the simplest possible way so that developers can read/write to the store and make better decisions about what to focus on to make their customers happier. 
 
 A sample code blurb for how this might work follows:
-```
+```python
 imort github.octostore
 
 # Create workflow
@@ -75,3 +75,26 @@ octostore.get_all_runs(date_one=datetime.datetime.now(), date_two=(datetime.date
 ```
 
 This project is about building an API to enable the above scenarios.
+
+Things we are NOT inventing:
+- A schema definition language - we're using OpenAPI/Proto
+- A schema validator - we're using Marshmallow/OpenAPI/Proto
+- A key-value store - we're using CosmoDB/etc
+- A workflow definition language - we're using OpenAPI
+- A dashboard for displaying - that's ObservableHQ & PowerBI
+- ...
+
+We ARE inventing a SIMPLE, WELL-INTEGRATED SDK that ties them together that says:
+- Here this thing
+- Validate this thing
+- Store this thing
+- Give me a bunch of these things back in the future
+- Compare thing A to thing B
+
+Future investments
+==================
+After we do the above, priority one will be to build automated adapters to pull in from common, opaque sources today - for example, web server logs, kubernetes logs, event streams, blah. We will also provide a system to allow you to extend these adapters using trivial language (e.g. give us an awk string and we'll convert it to json and store it)
+
+With this, we can tell you:
+- What the three jobs that were deployed to a K8s cluster before this job started crashlooping
+- ...
