@@ -18,7 +18,7 @@ Our goal is to enable the job to be done in the simplest possible way so that de
 
 A sample code blurb for how this might work follows:
 ```python
-imort github.octostore
+imort octostore
 
 # Create workflow
 workflow_DAG = """
