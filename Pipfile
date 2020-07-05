@@ -4,15 +4,21 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-flake8 = "*"
+flake8="*"
+pytest="*"
 black = "*"
 
 [packages]
-black="*"
 mlspeclib="*"
-pymysql = "*"
-ipython = "*"
-msgpack = "*"
+pymysql="*"
+ipython="*"
+msgpack="*"
+opentelemetry-api="*"
+opentelemetry-sdk="*"
+environs = "*"
+setuptools = "*"
+pymongo = "*"
+mlflow = "*"
 
 [requires]
 python_version = "3.8"

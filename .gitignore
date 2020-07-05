@@ -130,3 +130,5 @@ dmypy.json
 
 
 experiment/
+
+src/mongo_credentials.py
