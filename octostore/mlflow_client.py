@@ -1,6 +1,6 @@
 import octostore
-from octostore.mlflow.view_type import ViewType
-from octostore.core import client
+from octostore.entities.view_type import ViewType
+from octostore.client import Client
 
 # Source: Name of the notebook that launched the run or the project name and entry point for the run.
 # Version: Notebook revision if run from a notebook or Git commit hash if run from an MLflow Project.
@@ -32,7 +32,7 @@ class mlflow:
         # """
         # final_tracking_uri = tracking_uri or utils.get_tracking_uri()
         # self._registry_uri = registry_uri or final_tracking_uri
-        self._tracking_client = client()
+        self._tracking_client = Client()
 
         # `MlflowClient` also references a `ModelRegistryClient` instance that is provided by the
         # `MlflowClient._get_registry_client()` method. This `ModelRegistryClient` is not explicitly
@@ -69,19 +69,18 @@ class mlflow:
         # return self._tracking_client.get_metric_history(run_id, key)
         return NotImplementedError("NYI")
 
-    def create_run(self, experiment_id, start_time=None, tags=None):
+    def create_run(self, experiment_id, start_time=None, tags: list=[]):
         """
-        Create a :py:class:`mlflow.entities.Run` object that can be associated with
+        Create a :py:class:`octostore.entities.Run` object that can be associated with
         metrics, parameters, artifacts, etc.
-        Unlike :py:func:`mlflow.projects.run`, creates objects but does not run code.
-        Unlike :py:func:`mlflow.start_run`, does not change the "active run" used by
+        Unlike :py:func:`octostore.start_run`, does not change the "active run" used by
         :py:func:`mlflow.log_param`.
 
         :param experiment_id: The ID of then experiment to create a run in.
         :param start_time: If not provided, use the current timestamp.
         :param tags: A dictionary of key-value pairs that are converted into
                      :py:class:`mlflow.entities.RunTag` objects.
-        :return: :py:class:`mlflow.entities.Run` that was created.
+        :return: :py:class:`octostore.entities.Run` that was created.
         """
         return self._tracking_client.create_run(experiment_id, start_time, tags)
 

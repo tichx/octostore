@@ -1,19 +1,26 @@
+from uuid import uuid4
 import pytest
 import mock
 import sys
 import os
+from pathlib import Path
+import uuid
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, str(Path.cwd().parent))
+sys.path.insert(0, str(Path.cwd().parent.parent))
 
-from mlflow.entities import SourceType, ViewType, RunTag
-from mlflow.exceptions import MlflowException
+from octostore.entities.source_type import SourceType
+from octostore.entities.view_type import ViewType
+from octostore.entities.run_tag import RunTag
+from octostore.exceptions import OctostoreException as MlflowException
 from mlflow.protos.databricks_pb2 import ErrorCode, FEATURE_DISABLED
 from mlflow.store.tracking import SEARCH_MAX_RESULTS_DEFAULT
 from octostore.mlflow_client import mlflow as MlflowClient
 from mlflow.utils.file_utils import TempDir
 from mlflow.utils.mlflow_tags import MLFLOW_USER, MLFLOW_SOURCE_NAME, MLFLOW_SOURCE_TYPE, \
     MLFLOW_PARENT_RUN_ID, MLFLOW_GIT_COMMIT, MLFLOW_PROJECT_ENTRY_POINT
-
+from octostore.run import Run
 
 @pytest.fixture
 def mock_store():
@@ -35,48 +42,15 @@ def mock_time():
 
 
 def test_client_create_run(mock_store, mock_time):
-    experiment_id = mock.Mock()
+    experiment_id = mock.MagicMock()
+    experiment_id.__str__.return_value = str(uuid.uuid4().hex)
 
-    MlflowClient().create_run(experiment_id)
+    this_run = MlflowClient().create_run(experiment_id)
 
-    mock_store.create_run.assert_called_once_with(
-        experiment_id=experiment_id,
-        user_id="unknown",
-        start_time=int(mock_time * 1000),
-        tags=[]
-    )
-
-
-def test_client_create_run_overrides(mock_store):
-    experiment_id = mock.Mock()
-    user = mock.Mock()
-    start_time = mock.Mock()
-    tags = {
-        MLFLOW_USER: user,
-        MLFLOW_PARENT_RUN_ID: mock.Mock(),
-        MLFLOW_SOURCE_TYPE: SourceType.to_string(SourceType.JOB),
-        MLFLOW_SOURCE_NAME: mock.Mock(),
-        MLFLOW_PROJECT_ENTRY_POINT: mock.Mock(),
-        MLFLOW_GIT_COMMIT: mock.Mock(),
-        "other-key": "other-value"
-    }
-
-    MlflowClient().create_run(experiment_id, start_time, tags)
-
-    mock_store.create_run.assert_called_once_with(
-        experiment_id=experiment_id,
-        user_id=user,
-        start_time=start_time,
-        tags=[RunTag(key, value) for key, value in tags.items()],
-    )
-    mock_store.reset_mock()
-    MlflowClient().create_run(experiment_id, start_time, tags)
-    mock_store.create_run.assert_called_once_with(
-        experiment_id=experiment_id,
-        user_id=user,
-        start_time=start_time,
-        tags=[RunTag(key, value) for key, value in tags.items()]
-    )
+    assert this_run.experiment_id == experiment_id
+    assert this_run.user_id == Run._dummy_user_id
+    assert this_run.start_time == mock_time
+    assert this_run.tags == []
 
 
 @pytest.mark.skip("NYI")
