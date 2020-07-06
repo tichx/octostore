@@ -19,6 +19,8 @@ environs = "*"
 setuptools = "*"
 pymongo = "*"
 mlflow = "*"
+attrdict = "*"
+mock = "*"
 
 [requires]
 python_version = "3.8"
