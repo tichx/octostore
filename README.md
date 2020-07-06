@@ -18,7 +18,7 @@ Our goal is to enable the job to be done in the simplest possible way so that de
 
 A sample code blurb for how this might work follows:
 ```python
-imort github.octostore
+import github.octostore
 
 # Create workflow
 workflow_DAG = """
@@ -92,7 +92,6 @@ We ARE inventing a SIMPLE, WELL-INTEGRATED SDK that ties them together that says
 - Compare thing A to thing B
 
 Future investments
-==================
 After we do the above, priority one will be to build automated adapters to pull in from common, opaque sources today - for example, web server logs, kubernetes logs, event streams, blah. We will also provide a system to allow you to extend these adapters using trivial language (e.g. give us an awk string and we'll convert it to json and store it)
 
 With this, we can tell you:
