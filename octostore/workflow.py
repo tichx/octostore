@@ -1,14 +1,18 @@
 from pathlib import Path
 
-from mlspeclib import MLObject
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import (
+    ConsoleSpanExporter,
+    SimpleExportSpanProcessor,
+)
+from opentelemetry.trace import Tracer
+from opentelemetry.trace import Span
 
 
 class Workflow:
-    _gc = None
-
-    def __init__(self, credentials_packed):
-        # self._gc = GremlinHelpers(credentials_packed=credentials_packed)
-        pass
+    def __init__(self, workflow_name):
+        self.workflow_name = workflow_name
 
     # def attach_step_info(self, mlobject: MLObject, workflow_version, workflow_node_id, step_name, content_type):
     #     """ Saves an MLObject to the metastore connection. Uses the run_id from the object,

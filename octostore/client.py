@@ -31,14 +31,13 @@ class Client:
         self.mh = MongoHelpers(connection_uri)
         self.client = self.mh.get_client()
         self.db = self.client[db_name]
-        self.user_collection = self.db["user"]
 
-    def create_experiment(self, experiment_name, artifact_location) -> int:
-        # TODO: ONLY writing artifact location to the cloud - ignoring other options for now
-        return self.mh.create_experiment(experiment_name, None)
-
-    def create_run(self, experiment_id, start_time, tags):
-        self.current_run = Run(experiment_id=experiment_id, start_time=start_time, tags=tags)
+    def create_workflow(self, workflow_object):
+        self.current_run = Run(
+            workflow_id=workflow_object.workflow_id,
+            start_time=workflow_object.start_time,
+            tags=workflow_object.tags,
+        )
         return self.current_run
 
     def get_current_run(self):
