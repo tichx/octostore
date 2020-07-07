@@ -10,12 +10,6 @@ sys.path.append(str(Path(__file__).parent.resolve()))
 
 
 class Client:
-    _client = None
-    _db = None
-    _user_collection = None
-    _mh = None
-    _current_run = None
-
     def __init__(self):
         env = Env()
         env.read_env()
@@ -34,14 +28,18 @@ class Client:
                 f"mongodb://{username}:{password}@{host}:{port}/{db_name}?{args}"
             )
 
-        self._mh = MongoHelpers(connection_uri)
-        self._client = self._mh.get_client()
-        self._db = self._client[db_name]
-        self._user_collection = self._db["user"]
+        self.mh = MongoHelpers(connection_uri)
+        self.client = self.mh.get_client()
+        self.db = self.client[db_name]
+        self.user_collection = self.db["user"]
+
+    def create_experiment(self, experiment_name, artifact_location) -> int:
+        # TODO: ONLY writing artifact location to the cloud - ignoring other options for now
+        return self.mh.create_experiment(experiment_name, None)
 
     def create_run(self, experiment_id, start_time, tags):
-        self._current_run = Run(experiment_id=experiment_id, start_time=start_time, tags=tags)
-        return self.get_current_run()
+        self.current_run = Run(experiment_id=experiment_id, start_time=start_time, tags=tags)
+        return self.current_run
 
     def get_current_run(self):
-        return self._current_run
+        return self.current_run

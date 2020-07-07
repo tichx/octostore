@@ -1,0 +1,15 @@
+artifact_uri: mysql://user:password@host:port/dbname/bece7ab065b241178c281a7b40dffe7d/artifacts?driver=mydriver
+end_time: 1594065483941
+entry_point_name: ''
+experiment_id: '5'
+lifecycle_stage: active
+name: ''
+run_id: bece7ab065b241178c281a7b40dffe7d
+run_uuid: bece7ab065b241178c281a7b40dffe7d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1594065483930
+status: 3
+tags: []
+user_id: daaronch

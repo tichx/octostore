@@ -69,7 +69,7 @@ class mlflow:
         # return self._tracking_client.get_metric_history(run_id, key)
         return NotImplementedError("NYI")
 
-    def create_run(self, experiment_id, start_time=None, tags: list=[]):
+    def create_run(self, experiment_id, start_time=None, tags: list = []):
         """
         Create a :py:class:`octostore.entities.Run` object that can be associated with
         metrics, parameters, artifacts, etc.
@@ -124,8 +124,7 @@ class mlflow:
                                   If not provided, the server picks an appropriate default.
         :return: Integer ID of the created experiment.
         """
-        # return self._tracking_client.create_experiment(name, artifact_location)
-        return NotImplementedError("NYI")
+        return self._tracking_client.create_experiment(name, artifact_location)
 
     def delete_experiment(self, experiment_id):
         """

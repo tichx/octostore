@@ -157,8 +157,8 @@ class Run:
         run_info_dict["source_version"] = ""
         return run_info_dict
 
-    def start_run(self, experiment_id, start_time=None, tags=[]):
-        self.current_run.start_as_current_span(self.name)
+    def start_run(self, start_time=None, tags=[]):
+        self.current_run.start_as_current_span(self.run_id)
         self.current_span = self.current_run.CURRENT_SPAN
         self.current_span.set_attribute(
             "start_time", start_time or datetime.datetime.now().isoformat
@@ -167,11 +167,11 @@ class Run:
             "start_time", start_time or datetime.datetime.now().isoformat
         )
         self.current_span.set_attribute("tags", tags)
-        return self._current_run
+        return self.current_run
 
     def start_span(self, span_name: str):
-        self._current_span = self.get_current_run().start_as_current_span(span_name)
-        return self.get_current_span()
+        self.current_span = self.current_run.start_as_current_span(span_name)
+        return self.current_span
 
     def set_tag(self, key, value):
         """
@@ -182,14 +182,6 @@ class Run:
         """
         tag = RunTag(key, str(value))
         self.tags.append(tag)
-
-
-# from mlflow.entities.run_status import RunStatus
-# from mlflow.entities._mlflow_object import _MLflowObject
-# from mlflow.entities.lifecycle_stage import LifecycleStage
-# from mlflow.exceptions import MlflowException
-
-# from mlflow.protos.service_pb2 import RunInfo as ProtoRunInfo
 
 
 def check_run_is_active(run_info):

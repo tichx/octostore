@@ -18,19 +18,30 @@ from mlflow.protos.databricks_pb2 import ErrorCode, FEATURE_DISABLED
 from mlflow.store.tracking import SEARCH_MAX_RESULTS_DEFAULT
 from octostore.mlflow_client import mlflow as MlflowClient
 from mlflow.utils.file_utils import TempDir
-from mlflow.utils.mlflow_tags import MLFLOW_USER, MLFLOW_SOURCE_NAME, MLFLOW_SOURCE_TYPE, \
-    MLFLOW_PARENT_RUN_ID, MLFLOW_GIT_COMMIT, MLFLOW_PROJECT_ENTRY_POINT
+from mlflow.utils.mlflow_tags import (
+    MLFLOW_USER,
+    MLFLOW_SOURCE_NAME,
+    MLFLOW_SOURCE_TYPE,
+    MLFLOW_PARENT_RUN_ID,
+    MLFLOW_GIT_COMMIT,
+    MLFLOW_PROJECT_ENTRY_POINT,
+)
 from octostore.run import Run
+
 
 @pytest.fixture
 def mock_store():
-    with mock.patch("mlflow.tracking._tracking_service.utils._get_store") as mock_get_store:
+    with mock.patch(
+        "mlflow.tracking._tracking_service.utils._get_store"
+    ) as mock_get_store:
         yield mock_get_store.return_value
 
 
 @pytest.fixture
 def mock_registry_store():
-    with mock.patch("mlflow.tracking._model_registry.utils._get_store") as mock_get_store:
+    with mock.patch(
+        "mlflow.tracking._model_registry.utils._get_store"
+    ) as mock_get_store:
         yield mock_get_store.return_value
 
 
@@ -56,89 +67,105 @@ def test_client_create_run(mock_store, mock_time):
 @pytest.mark.skip("NYI")
 def test_client_search_runs_defaults(mock_store):
     MlflowClient().search_runs([1, 2, 3])
-    mock_store.search_runs.assert_called_once_with(experiment_ids=[1, 2, 3],
-                                                   filter_string="",
-                                                   run_view_type=ViewType.ACTIVE_ONLY,
-                                                   max_results=SEARCH_MAX_RESULTS_DEFAULT,
-                                                   order_by=None,
-                                                   page_token=None)
+    mock_store.search_runs.assert_called_once_with(
+        experiment_ids=[1, 2, 3],
+        filter_string="",
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=SEARCH_MAX_RESULTS_DEFAULT,
+        order_by=None,
+        page_token=None,
+    )
 
 
 @pytest.mark.skip("NYI")
 def test_client_search_runs_filter(mock_store):
     MlflowClient().search_runs(["a", "b", "c"], "my filter")
-    mock_store.search_runs.assert_called_once_with(experiment_ids=["a", "b", "c"],
-                                                   filter_string="my filter",
-                                                   run_view_type=ViewType.ACTIVE_ONLY,
-                                                   max_results=SEARCH_MAX_RESULTS_DEFAULT,
-                                                   order_by=None,
-                                                   page_token=None)
+    mock_store.search_runs.assert_called_once_with(
+        experiment_ids=["a", "b", "c"],
+        filter_string="my filter",
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=SEARCH_MAX_RESULTS_DEFAULT,
+        order_by=None,
+        page_token=None,
+    )
 
 
 @pytest.mark.skip("NYI")
 def test_client_search_runs_view_type(mock_store):
     MlflowClient().search_runs(["a", "b", "c"], "my filter", ViewType.DELETED_ONLY)
-    mock_store.search_runs.assert_called_once_with(experiment_ids=["a", "b", "c"],
-                                                   filter_string="my filter",
-                                                   run_view_type=ViewType.DELETED_ONLY,
-                                                   max_results=SEARCH_MAX_RESULTS_DEFAULT,
-                                                   order_by=None,
-                                                   page_token=None)
+    mock_store.search_runs.assert_called_once_with(
+        experiment_ids=["a", "b", "c"],
+        filter_string="my filter",
+        run_view_type=ViewType.DELETED_ONLY,
+        max_results=SEARCH_MAX_RESULTS_DEFAULT,
+        order_by=None,
+        page_token=None,
+    )
 
 
 @pytest.mark.skip("NYI")
 def test_client_search_runs_max_results(mock_store):
     MlflowClient().search_runs([5], "my filter", ViewType.ALL, 2876)
-    mock_store.search_runs.assert_called_once_with(experiment_ids=[5],
-                                                   filter_string="my filter",
-                                                   run_view_type=ViewType.ALL,
-                                                   max_results=2876,
-                                                   order_by=None,
-                                                   page_token=None)
+    mock_store.search_runs.assert_called_once_with(
+        experiment_ids=[5],
+        filter_string="my filter",
+        run_view_type=ViewType.ALL,
+        max_results=2876,
+        order_by=None,
+        page_token=None,
+    )
 
 
 @pytest.mark.skip("NYI")
 def test_client_search_runs_int_experiment_id(mock_store):
     MlflowClient().search_runs(123)
-    mock_store.search_runs.assert_called_once_with(experiment_ids=[123],
-                                                   filter_string="",
-                                                   run_view_type=ViewType.ACTIVE_ONLY,
-                                                   max_results=SEARCH_MAX_RESULTS_DEFAULT,
-                                                   order_by=None,
-                                                   page_token=None)
+    mock_store.search_runs.assert_called_once_with(
+        experiment_ids=[123],
+        filter_string="",
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=SEARCH_MAX_RESULTS_DEFAULT,
+        order_by=None,
+        page_token=None,
+    )
 
 
 @pytest.mark.skip("NYI")
 def test_client_search_runs_string_experiment_id(mock_store):
     MlflowClient().search_runs("abc")
-    mock_store.search_runs.assert_called_once_with(experiment_ids=["abc"],
-                                                   filter_string="",
-                                                   run_view_type=ViewType.ACTIVE_ONLY,
-                                                   max_results=SEARCH_MAX_RESULTS_DEFAULT,
-                                                   order_by=None,
-                                                   page_token=None)
+    mock_store.search_runs.assert_called_once_with(
+        experiment_ids=["abc"],
+        filter_string="",
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=SEARCH_MAX_RESULTS_DEFAULT,
+        order_by=None,
+        page_token=None,
+    )
 
 
 @pytest.mark.skip("NYI")
 def test_client_search_runs_order_by(mock_store):
     MlflowClient().search_runs([5], order_by=["a", "b"])
-    mock_store.search_runs.assert_called_once_with(experiment_ids=[5],
-                                                   filter_string="",
-                                                   run_view_type=ViewType.ACTIVE_ONLY,
-                                                   max_results=SEARCH_MAX_RESULTS_DEFAULT,
-                                                   order_by=["a", "b"],
-                                                   page_token=None)
+    mock_store.search_runs.assert_called_once_with(
+        experiment_ids=[5],
+        filter_string="",
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=SEARCH_MAX_RESULTS_DEFAULT,
+        order_by=["a", "b"],
+        page_token=None,
+    )
 
 
 @pytest.mark.skip("NYI")
 def test_client_search_runs_page_token(mock_store):
     MlflowClient().search_runs([5], page_token="blah")
-    mock_store.search_runs.assert_called_once_with(experiment_ids=[5],
-                                                   filter_string="",
-                                                   run_view_type=ViewType.ACTIVE_ONLY,
-                                                   max_results=SEARCH_MAX_RESULTS_DEFAULT,
-                                                   order_by=None,
-                                                   page_token="blah")
+    mock_store.search_runs.assert_called_once_with(
+        experiment_ids=[5],
+        filter_string="",
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=SEARCH_MAX_RESULTS_DEFAULT,
+        order_by=None,
+        page_token="blah",
+    )
 
 
 @pytest.mark.skip("NYI")
@@ -173,10 +200,12 @@ def test_update_registered_model(mock_registry_store):
     expected_return_value_2 = "other expected return value."
     mock_registry_store.update_registered_model.return_value = expected_return_value_2
     res = MlflowClient(registry_uri="sqlite:///somedb.db").update_registered_model(
-        name="orig name", description="new description")
+        name="orig name", description="new description"
+    )
     assert expected_return_value_2 == res
     mock_registry_store.update_registered_model.assert_called_once_with(
-        name="orig name", description="new description")
+        name="orig name", description="new description"
+    )
     mock_registry_store.rename_registered_model.assert_not_called()
 
 
@@ -188,8 +217,10 @@ def test_update_model_version(mock_registry_store):
     expected_return_value = "some expected return value."
     mock_registry_store.update_model_version.return_value = expected_return_value
     res = MlflowClient(registry_uri="sqlite:///somedb.db").update_model_version(
-        name="orig name", version="1", description="desc")
+        name="orig name", version="1", description="desc"
+    )
     assert expected_return_value == res
     mock_registry_store.update_model_version.assert_called_once_with(
-        name="orig name", version="1", description="desc")
+        name="orig name", version="1", description="desc"
+    )
     mock_registry_store.transition_model_version_stage.assert_not_called()

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/daaronch/octostore/mlruns/0/9cbca3ea309e4896bfdfe02b5713ea13/artifacts
+end_time: 1594065576774
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 9cbca3ea309e4896bfdfe02b5713ea13
+run_uuid: 9cbca3ea309e4896bfdfe02b5713ea13
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1594065576766
+status: 3
+tags: []
+user_id: daaronch
