@@ -12,8 +12,13 @@ However, these issues could be elegantly resolved with Microsoft's renewed visio
 
 
 #### Prerequisites
-Before you follow along, please make sure that you have ``Python3``, ``Java JRE``,``mlflow``,``h2o``(``pip install h2o``), ``Jupyter Notebook`` successfully installed on your machine.
-
+To follow along, please execute the following commands:
+```bash 
+git clone git@github.com:aronchick/octostore.git 
+cd octostore
+pipenv install
+pipenv shell
+```
 
 #### Step by step tutorial (Wine quality prediction)
 1. Sarah creates a new project folder on her Office desktop. She uses local __Jupyter notebook__ to write and run her training code. In this experiment, she wants to use _random forest_ tree to predict wine quality, and uses __mlflow__ to track the experiment. In her current folder, she has the following items:
