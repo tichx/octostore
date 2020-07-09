@@ -21,6 +21,9 @@ pymongo = "*"
 mlflow = "*"
 attrdict = "*"
 mock = "*"
+mlflow = "*"
+h2o = "*"
+jupyter = "*"
 
 [requires]
 python_version = "3.8"

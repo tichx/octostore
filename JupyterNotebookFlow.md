@@ -14,6 +14,7 @@ However, these issues could be elegantly resolved with Microsoft's renewed visio
 #### Prerequisites
 To follow along, please execute the following commands:
 ```bash 
+*** How do we want to recommend someone install JRE? ***
 git clone git@github.com:aronchick/octostore.git 
 cd octostore
 pipenv install
@@ -30,7 +31,10 @@ pipenv shell
       random_forest.py
       wine-quality.csv
    ```
-
+**Questions about this step**
+- How were these things created? Auto generated?
+- Could we start with ccds to create the repo? 
+- Where'd she get the csv? Starting with data is a really big issue, we should take it on.
 
 2. In her training code, she uses __MLflow logging API__ to log metrics and artifacts. 
    ![image-log-metrics-artifacts](_assets/JupyterNotebookFlow/step2.png)
@@ -41,10 +45,16 @@ pipenv shell
    ```
    > Note: you can also open ```random_forest.ipynb``` in Jupyter Notebook to execute one step at the time.
 
+**Questions about this step**
+- Is there anything we can do to hightlight issues along the way? Easier debugging/etc?
+- What about auto-logging - reading stuff so the data scientist doesn't have to?
 
 3. The metrics and artifacts are stored in the specific folders under the local project folder ```mlflow/examples/h2o/mlruns/```.
 
    ![image-metrics-artifacts-folder](_assets/JupyterNotebookFlow/image-metrics-artifacts-folder.png)
+
+**Questions about this step**
+- Why are we using h2o?
 
 
 4. Sarah then wants to visualize and compare different runs' results on her local dashboard. To do so, she would run in CLI ```mlflow ui``` which will then host an mlflow GUI dashboard at ```http://localhost:5000```.
@@ -52,15 +62,34 @@ pipenv shell
    ![images-local-dashboard](_assets/JupyterNotebookFlow/step4.png)
    > Under the "Experiment" tab, she will find 5 runs that she just finished.
 
+**Questions about this step**
+- MLflow is a great starter - but I am a bit worried here. Jupyter is 100x bigger than MLFlow, could we start with that first?
+
+
 5. After several iterations, she's satisfied with the model. Now she wants to push the project into her GitHub repo so that she can continue working on her laptop when she's back to home. 
+
+**Questions about this step**
+- This is a big step and we need to smooth it. Let's say they started with CCDS, how do we move up from there? Is there a VERY simple way we could help them bridge? Could be a script?
+
 
 6. She creates a new  GitHub repo using the __"Machine Learning Project Template"__, a special template made exclusive for ML projects. It will help set this repo's project structure (by following [Cookiecutter Data Science template](https://drivendata.github.io/cookiecutter-data-science/)) and the tracking server.
 
    ![image-new-ml-project-from-github](_assets/JupyterNotebookFlow/step6.png)
 
+**Questions about this step**
+- This could be super powerful if we allowed you to run a script to "promote" a directory UP to a CCDS format. 
+
+
 7. She clones the new repo to local computer. She adds the notebook and mlflow folder to the repo, commit, and push to remote.
 
+**Questions about this step**
+- This feels backwards to me - they're alreday working locally, couldn't we instead push it up?
+- I just don't like the idea of pulling down - it just feels backwards.
+
 8. The new hosted metastore services (octostore) in GitHub can read the tracking data from mlflow folder, environment from ```requirements.txt```, (other artifacts to add).
+
+**Questions about this step**
+- Shouldn't be necessary - let's make sure folks are using Pipenv files.
 
 9. From the GitHub repo, she can see all the previous local run metrics/results from the Insights tab.
       - Under __Insights__ tab, she will find the highlights of 200 runs tracked by MLflow visualized here for a quick glance.
@@ -84,3 +113,7 @@ pipenv shell
 ### Open Questions
 
 - Do we want to push data from local to remote repo? If so, how to handle these large datasets?
+-- Let's figure out how to copy behind the scenes (e.g clone includes copying from bucket to bucket)
+- We should also try to address how to do workflows locally - e.g. what if you wanted to process the data somehow? (e.g. tokenize, feature engineering, etc)
+- There's alos local metadata reading and writing for non MLFlow steps - how are we going to tackle that?
+- What if we use some form of distributed tracing - like open telemetry?
